@@ -1,5 +1,7 @@
 import type { CoupleOrder, FamilySide, WeddingData } from '../types'
 
+const publicBase = import.meta.env.BASE_URL
+
 export const weddingData: WeddingData = {
   groom: {
     name: 'Devashish Shukla',
@@ -50,11 +52,11 @@ export const weddingData: WeddingData = {
   ],
   hashtag: '#DevashishWedsSonam',
   assets: {
-    mandap: '/images/temple-mandap.png',
+    mandap: `${publicBase}images/temple-mandap.png`,
     couplePhotos: [
-      { src: '/images/couple-snow.jpeg', alt: 'Together outdoors in a snowy landscape.' },
-      { src: '/images/couple-portrait.jpeg', alt: 'A close-up selfie together.' },
-      { src: '/images/couple-lights.jpeg', alt: 'Sharing a smile beneath warm lights.' },
+      { src: `${publicBase}images/couple-snow.jpeg`, alt: 'Together outdoors in a snowy landscape.' },
+      { src: `${publicBase}images/couple-portrait.jpeg`, alt: 'A close-up selfie together.' },
+      { src: `${publicBase}images/couple-lights.jpeg`, alt: 'Sharing a smile beneath warm lights.' },
     ],
     videoUrl: '',
     musicUrl: '',
