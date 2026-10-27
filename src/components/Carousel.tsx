@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState, type MouseEvent, type PointerEvent } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, ImagePlus } from 'lucide-react'
 
@@ -17,6 +17,8 @@ const slotStyles: Record<Slot, { left: string; top: string; width: string; heigh
 export function Carousel({ images, coupleNames }: CarouselProps) {
   const [index, setIndex] = useState(0)
   const reducedMotion = useReducedMotion()
+  const swipeStart = useRef<{ x: number; y: number } | null>(null)
+  const suppressClickUntil = useRef(0)
 
   if (images.length === 0) {
     return (
@@ -31,6 +33,29 @@ export function Carousel({ images, coupleNames }: CarouselProps) {
   }
 
   const move = (direction: number) => setIndex((current) => (current + direction + images.length) % images.length)
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== 'touch') return
+    swipeStart.current = { x: event.clientX, y: event.clientY }
+  }
+  const handlePointerUp = (event: PointerEvent<HTMLDivElement>) => {
+    const start = swipeStart.current
+    swipeStart.current = null
+    if (!start || event.pointerType !== 'touch') return
+
+    const deltaX = event.clientX - start.x
+    const deltaY = event.clientY - start.y
+    const threshold = Math.max(40, event.currentTarget.clientWidth * 0.1)
+    if (Math.abs(deltaX) < threshold || Math.abs(deltaX) <= Math.abs(deltaY) * 1.25) return
+
+    suppressClickUntil.current = Date.now() + 500
+    move(deltaX < 0 ? 1 : -1)
+  }
+  const handleClickCapture = (event: MouseEvent<HTMLDivElement>) => {
+    if (Date.now() >= suppressClickUntil.current) return
+    suppressClickUntil.current = 0
+    event.preventDefault()
+    event.stopPropagation()
+  }
   const getSlot = (imageIndex: number): Slot => {
     if (images.length === 1) return 'center'
     const relativePosition = (imageIndex - index + images.length) % images.length
@@ -41,7 +66,16 @@ export function Carousel({ images, coupleNames }: CarouselProps) {
   }
 
   return (
-    <div className="photo-carousel" role="region" aria-roledescription="carousel" aria-label={`Photos of ${coupleNames}`}>
+    <div
+      className="photo-carousel"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={`Photos of ${coupleNames}`}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerCancel={() => { swipeStart.current = null }}
+      onClickCapture={handleClickCapture}
+    >
       {images.map((photo, imageIndex) => {
         const slot = getSlot(imageIndex)
         const active = slot === 'center'
