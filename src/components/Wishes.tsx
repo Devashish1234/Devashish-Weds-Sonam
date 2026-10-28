@@ -1,80 +1,145 @@
-import { useEffect, useState } from 'react'
-import { Heart, Send } from 'lucide-react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
+import { BookOpen, Heart, Send, X } from 'lucide-react'
 import { type Wish } from '../types'
+import { createWish, subscribeToWishes } from '../lib/wishService'
 import { Reveal } from './Reveal'
 import { SectionHeading } from './SectionHeading'
 
-const STORAGE_KEY = 'devashish-sonam-wedding-wishes-v1'
+const PREVIEW_WISH_COUNT = 4
 
-function readWishes(): Wish[] {
-  try {
-    const stored: unknown = JSON.parse(window.localStorage.getItem(STORAGE_KEY) ?? '[]')
-    if (!Array.isArray(stored)) return []
-    return stored.filter((item): item is Wish =>
-      typeof item === 'object' && item !== null &&
-      typeof item.id === 'string' && typeof item.name === 'string' &&
-      typeof item.message === 'string' && typeof item.createdAt === 'number',
-    ).slice(0, 50)
-  } catch {
-    return []
-  }
+function WishList({ wishes, className }: { wishes: Wish[]; className: string }) {
+  return (
+    <ul className={className}>
+      {wishes.map((wish) => (
+        <li key={wish.id} className="wish-entry">
+          <blockquote>“{wish.message}”</blockquote>
+          <p>— {wish.name}</p>
+        </li>
+      ))}
+    </ul>
+  )
 }
 
 export function Wishes() {
   const [wishes, setWishes] = useState<Wish[]>([])
   const [name, setName] = useState('')
   const [message, setMessage] = useState('')
-  const [error, setError] = useState('')
-  const [storageError, setStorageError] = useState(false)
+  const [formError, setFormError] = useState('')
+  const [loadError, setLoadError] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const dialogRef = useRef<HTMLDialogElement>(null)
 
-  useEffect(() => setWishes(readWishes()), [])
-
-  const save = (nextWishes: Wish[]) => {
+  useEffect(() => subscribeToWishes((nextWishes) => {
     setWishes(nextWishes)
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(nextWishes))
-      setStorageError(false)
-    } catch {
-      setStorageError(true)
-    }
-  }
+    setIsLoading(false)
+    setLoadError('')
+  }, () => {
+    setIsLoading(false)
+    setLoadError('Wishes could not be loaded. Please refresh the page to try again.')
+  }), [])
 
-  const addWish = (event: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    const dialog = dialogRef.current
+    if (!dialog) return
+
+    if (isDialogOpen && !dialog.open) dialog.showModal()
+    if (!isDialogOpen && dialog.open) dialog.close()
+  }, [isDialogOpen])
+
+  const addWish = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const cleanName = name.trim().slice(0, 60)
     const cleanMessage = message.trim().slice(0, 280)
     if (cleanName.length < 2 || cleanMessage.length < 3) {
-      setError('Please add your name and a short wish.');
+      setFormError('Please add your name and a short wish.')
+      setSuccessMessage('')
       return
     }
-    setError('')
-    save([{ id: crypto.randomUUID(), name: cleanName, message: cleanMessage, createdAt: Date.now() }, ...wishes].slice(0, 50))
-    setName('')
-    setMessage('')
+
+    setFormError('')
+    setSuccessMessage('')
+    setIsSubmitting(true)
+    try {
+      await createWish({ name: cleanName, message: cleanMessage })
+      setName('')
+      setMessage('')
+      setSuccessMessage('Your wish has been shared with everyone.')
+    } catch {
+      setFormError('Your wish could not be shared. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
-  const removeWish = (id: string) => save(wishes.filter((wish) => wish.id !== id))
+  const closeDialog = () => setIsDialogOpen(false)
+  const previewWishes = wishes.slice(0, PREVIEW_WISH_COUNT)
+  const hasMoreWishes = wishes.length > PREVIEW_WISH_COUNT
 
   return (
     <section className="wishes section-pad" id="wishes" aria-labelledby="wishes-title">
       <div className="section-shell wishes__grid">
         <Reveal>
-          <SectionHeading eyebrow="A little love to carry with us" title="Leave a wish" titleId="wishes-title" description="Your kind words will live on this device for the next visitor to read." centered={false} />
-          <form className="wish-form" onSubmit={addWish}>
-            <div className="field-group"><label htmlFor="wish-name">Your name</label><input id="wish-name" autoComplete="name" maxLength={60} value={name} onChange={(event) => setName(event.target.value)} required /></div>
-            <div className="field-group"><label htmlFor="wish-message">Your message</label><textarea id="wish-message" maxLength={280} value={message} onChange={(event) => setMessage(event.target.value)} rows={3} required /></div>
-            {error && <p className="field-error" role="alert">{error}</p>}
-            {storageError && <p className="field-error" role="status">This browser could not save the wish. It will disappear when you leave this page.</p>}
-            <button className="button button--primary" type="submit"><Send size={15} aria-hidden="true" /> Share your wish</button>
+          <SectionHeading eyebrow="A little love to carry with us" title="Leave a wish" titleId="wishes-title" description="Share a kind word with the couple and every guest." centered={false} />
+          <form className="wish-form" onSubmit={addWish} noValidate>
+            <div className="field-group">
+              <label htmlFor="wish-name">Your name</label>
+              <input id="wish-name" autoComplete="name" maxLength={60} value={name} onChange={(event) => setName(event.target.value)} required aria-invalid={Boolean(formError)} aria-describedby={formError ? 'wish-form-error' : undefined} />
+            </div>
+            <div className="field-group">
+              <label htmlFor="wish-message">Your message</label>
+              <textarea id="wish-message" maxLength={280} value={message} onChange={(event) => setMessage(event.target.value)} rows={3} required aria-invalid={Boolean(formError)} aria-describedby={formError ? 'wish-form-error' : undefined} />
+            </div>
+            {formError && <p className="field-error" id="wish-form-error" role="alert">{formError}</p>}
+            {successMessage && <p className="wish-success" role="status">{successMessage}</p>}
+            <button className="button button--primary" type="submit" disabled={isSubmitting}>
+              <Send size={15} aria-hidden="true" />
+              {isSubmitting ? 'Sharing your wish…' : 'Share your wish'}
+            </button>
           </form>
         </Reveal>
         <Reveal delay={0.12} className="wishes-wall">
-          <div className="wishes-wall__heading"><Heart size={18} aria-hidden="true" /><h3>Wishes for the couple</h3></div>
-          {wishes.length === 0 ? <p className="wishes-empty">The first wish is waiting to be written.</p> : (
-            <ul className="wish-list">
-              {wishes.map((wish) => <li key={wish.id} className="wish-entry"><blockquote>“{wish.message}”</blockquote><p>— {wish.name}</p><button type="button" className="wish-remove" onClick={() => removeWish(wish.id)} aria-label={`Remove wish from ${wish.name}`}>Remove</button></li>)}
-            </ul>
-          )}
+          <div className="wishes-wall__heading">
+            <Heart size={18} aria-hidden="true" />
+            <h3>Wishes for the couple</h3>
+          </div>
+          {isLoading ? <p className="wishes-empty" role="status">Gathering your wishes…</p> : null}
+          {!isLoading && loadError ? <p className="field-error" role="alert">{loadError}</p> : null}
+          {!isLoading && !loadError && wishes.length === 0 ? <p className="wishes-empty">The first wish is waiting to be written.</p> : null}
+          {!isLoading && !loadError && wishes.length > 0 ? (
+            <WishList wishes={previewWishes} className="wish-list wish-list--preview" />
+          ) : null}
+          {hasMoreWishes && !loadError ? (
+            <button className="button button--secondary wishes-read-all" type="button" onClick={() => setIsDialogOpen(true)}>
+              <BookOpen size={15} aria-hidden="true" />
+              Read all wishes <span>({wishes.length})</span>
+            </button>
+          ) : null}
+          <dialog
+            className="wish-dialog"
+            ref={dialogRef}
+            aria-labelledby="wish-dialog-title"
+            onClose={() => setIsDialogOpen(false)}
+            onClick={(event) => {
+              if (event.target === event.currentTarget) closeDialog()
+            }}
+          >
+            <div className="wish-dialog__header">
+              <div>
+                <p className="eyebrow">A little love to carry with us</p>
+                <h2 id="wish-dialog-title">Wishes for the couple</h2>
+                <p className="wish-dialog__count">{wishes.length} wishes · newest first</p>
+              </div>
+              <button className="wish-dialog__close" type="button" onClick={closeDialog} aria-label="Close wishes dialog">
+                <X size={20} aria-hidden="true" />
+              </button>
+            </div>
+            <div className="wish-dialog__body">
+              {wishes.length > 0 ? <WishList wishes={wishes} className="wish-list wish-list--dialog" /> : <p className="wishes-empty">The first wish is waiting to be written.</p>}
+            </div>
+          </dialog>
         </Reveal>
       </div>
     </section>

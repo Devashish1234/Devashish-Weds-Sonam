@@ -1,0 +1,39 @@
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+// Collection: wishes
+// Document ID: Firestore-generated ID
+// Fields (all required and immutable to website clients):
+//   - name: string, 2–60 characters
+//   - message: string, 3–280 characters
+//   - createdAt: timestamp, must equal request.time (server timestamp)
+// The public website may read all wishes and create validated wishes.
+// Website clients may not update or delete any wish.
+// ===============================================================
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isValidWish(data) {
+      return data.keys().hasAll(['name', 'message', 'createdAt'])
+        && data.keys().hasOnly(['name', 'message', 'createdAt'])
+        && data.name is string
+        && data.name.size() >= 2
+        && data.name.size() <= 60
+        && data.name.matches('.*\\S.*')
+        && data.message is string
+        && data.message.size() >= 3
+        && data.message.size() <= 280
+        && data.message.matches('.*\\S.*')
+        && data.createdAt is timestamp
+        && data.createdAt == request.time;
+    }
+
+    match /wishes/{wishId} {
+      // Public read is required for every guest to see the shared wall.
+      allow get, list: if true;
+      allow create: if isValidWish(request.resource.data);
+      allow update, delete: if false;
+    }
+  }
+}
