@@ -70,7 +70,7 @@ Use soft, paired raised and inset shadows to make tactile clay surfaces from the
 
 ## Shapes
 
-Use generous but controlled rounded corners (roughly .65–1.6rem) on cards and controls, thin muted-gold edges, and inset fields. Keep the temple artwork and couple photos vivid and crisp without picture borders. Editorial copy can remain open between grouped clay surfaces; avoid turning every text block into a card.
+Use generous but controlled rounded corners (roughly .65–1.6rem) on cards and controls, thin muted-gold edges, and inset fields. Keep the temple artwork vivid and crisp. Editorial copy can remain open between grouped clay surfaces; avoid turning every text block into a card.
 
 ## Components
 
@@ -93,7 +93,7 @@ Use native inputs with visible labels and field-level error text. Do not show in
 At each fresh visit, ask guests whether they are joining from the groom's or bride's side. Use a native modal dialog so focus stays inside the two required choices, and reorder the couple and parent names for that visit. Do not persist this choice across launches.
 The entrance dialog uses a restrained claymorphism treatment in the invitation palette: warm ivory surfaces, soft raised and inset shadows, rounded choice tiles, and the same clear text hierarchy. Keep the page behind the full-screen gate hidden until a side is chosen.
 
-The clay surface system continues through the invitation: blessing, scratch card, schedule panels, guest information, RSVP, wishes, countdown units, and media frame. Compact card internals for phone scanning. The story photo focus rail uses a square outer frame (20% shorter than the former 4:5 frame); keep all supplied photos visible with one clearly dominant, centered highlight and smaller, dimmer side previews. The focus glides to the selected photo when guests tap a preview or use the previous/next controls.
+The clay surface system continues through the invitation: blessing, scratch card, schedule panels, guest information, RSVP, wishes, countdown units, and media frame. Compact card internals for phone scanning. A family blessing section uses two balanced parent-name groups and a gold floral divider to honor both families without personal photographs.
 
 ### Iconography
 
@@ -101,11 +101,11 @@ Use Lucide React sparingly for utility cues; prefer small bespoke CSS/SVG line m
 
 ### Motion
 
-Use Framer Motion for the hero portal, the photo focus rail, and short opacity/position reveals. Keep movement slow, interruptible, scroll-linked only for the hero, and removed under `prefers-reduced-motion`.
+Use Framer Motion for the hero portal and short opacity/position reveals. Keep movement slow, interruptible, scroll-linked only for the hero, and removed under `prefers-reduced-motion`.
 
 ### Content and data visualization
 
-Use warm, direct, celebratory copy. All event facts and supplied couple-photo captions live in the typed wedding data module. The story gallery keeps all three photos visible, with the centered image largest and adjacent images shorter; selecting or advancing a photo animates it into the centered focus position. Images fill their frames without borders. Omit an Instagram account handle.
+Use warm, direct, celebratory copy. All event facts live in the typed wedding data module. The family blessing uses the side-aware name order and the parents already supplied by the couple. Omit an Instagram account handle and personal couple photos.
 
 ## Do's and Don'ts
 
@@ -113,3 +113,4 @@ Use warm, direct, celebratory copy. All event facts and supplied couple-photo ca
 - **Do:** Keep time, location, and contact information easy to scan and tap on a phone.
 - **Don't:** Use a fake scroll runway, lock scrolling, or animate under reduced-motion preference.
 - **Don't:** imply that local RSVP or wishes were sent to the family or stored across devices.
+

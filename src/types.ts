@@ -26,7 +26,7 @@ export type WeddingData = {
   contacts: { groomSide: string; brideSide: string }
   events: WeddingEvent[]
   hashtag: string
-  assets: { mandap: string; couplePhotos: { src: string; alt: string }[]; videoUrl: string; musicUrl: string }
+  assets: { mandap: string; videoUrl: string; musicUrl: string }
 }
 
 export type Wish = {
@@ -35,3 +35,4 @@ export type Wish = {
   message: string
   createdAt: number
 }
+

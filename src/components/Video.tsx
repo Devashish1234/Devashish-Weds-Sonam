@@ -11,8 +11,9 @@ export function Video() {
           <source src={weddingData.assets.videoUrl} />
           Your browser does not support video playback.
         </video>
-        <p className="video-caption"><Play size={13} aria-hidden="true" /> A little glimpse of our story</p>
+        <p className="video-caption"><Play size={13} aria-hidden="true" /> A glimpse of our celebration</p>
       </Reveal>
     </section>
   )
 }
+

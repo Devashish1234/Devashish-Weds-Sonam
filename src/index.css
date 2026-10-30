@@ -152,27 +152,19 @@ img { max-width: 100%; }
 .text-link--light { margin-top: 1.5rem; border-color: rgba(255,249,239,.5); color: var(--paper); }
 .functions-address { margin: 1.6rem 0 0; color: #d8c8b8; font-size: .72rem; letter-spacing: .04em; text-align: center; }
 
-/* Couple story, hashtag, film */
-.couple { background: var(--paper); }
-.couple__grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(18rem, 1.1fr); align-items: center; gap: clamp(3rem, 8vw, 8rem); }
-.couple__story > p { max-width: 29rem; color: #725e54; }
-.couple__signoff { display: flex; align-items: baseline; gap: .8rem; margin: 2.2rem 0 1rem; color: var(--maroon); font-family: var(--type-display); font-size: 1.6rem; }
-.couple__signoff i { color: var(--gold); font-size: .9rem; }
-.photo-placeholder { position: relative; display: grid; min-height: 0; aspect-ratio: 1 / 1; padding: 1rem; overflow: hidden; border: 0; border-radius: 1rem; background: #e9dac4; place-items: center; box-shadow: 10px 12px 26px rgba(91,64,42,.12), -8px -8px 20px rgba(255,255,255,.82); }
-.photo-placeholder::before { position: absolute; inset: .65rem; border: 1px solid rgba(110,31,46,.3); content: ""; }
-.photo-placeholder__frame { position: relative; display: flex; width: 100%; height: 100%; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(ellipse at 50% 36%, rgba(255,249,239,.78), rgba(248,240,227,.58) 50%, rgba(211,182,122,.23)); color: var(--maroon); text-align: center; }
-.photo-placeholder__frame p { margin: 1.1rem 0 .4rem; font-family: var(--type-display); font-size: 1.55rem; line-height: 1.35; }
-.photo-placeholder__frame span { color: #755c4c; font-size: .63rem; letter-spacing: .14em; text-transform: uppercase; }
-.photo-carousel { position: relative; aspect-ratio: 1 / 1; overflow: visible; isolation: isolate; }
-.photo-carousel__slide { position: absolute; display: block; overflow: hidden; padding: 0; border: 0; border-radius: 0; background: transparent; cursor: pointer; transform-origin: center; will-change: transform, opacity; }
-.photo-carousel__slide[data-position="center"] { box-shadow: 0 16px 34px rgba(41,28,26,.2); }
-.photo-carousel__slide img { display: block; width: 100%; height: 100%; border: 0; object-fit: cover; }
-.photo-carousel__slide[data-position="left"] img, .photo-carousel__slide[data-position="right"] img { filter: saturate(.78) brightness(.92); }
-.photo-carousel__slide:focus-visible { z-index: 4 !important; outline: 2px solid var(--gold); outline-offset: 4px; }
-.photo-carousel__controls { position: absolute; z-index: 5; right: .65rem; bottom: .7rem; left: .65rem; display: flex; align-items: center; justify-content: space-between; color: white; pointer-events: none; }
-.photo-carousel__controls button { display: grid; width: 2.75rem; height: 2.75rem; border: 1px solid rgba(255,255,255,.78); border-radius: 50%; background: rgba(41,28,26,.42); color: white; place-items: center; cursor: pointer; pointer-events: auto; transition: background-color .2s ease, transform .2s ease; }
-.photo-carousel__controls button:hover { transform: scale(1.05); background: rgba(66,19,30,.8); }
-.photo-carousel__controls span { padding: .25rem .6rem; border-radius: 999px; background: rgba(41,28,26,.56); font-size: .7rem; pointer-events: auto; }
+/* Family blessing, hashtag, film */
+.family-blessings { background: var(--paper); text-align: center; }
+.family-blessings__inner { max-width: 65rem; }
+.family-blessings .section-heading { margin-bottom: clamp(2rem, 5vw, 3.5rem); }
+.family-blessings__frame { padding: clamp(2rem, 5vw, 4rem); border: 1px solid rgba(181,150,90,.35); border-radius: 1.6rem; background: #f4ead9; box-shadow: 12px 14px 30px rgba(91,64,42,.09), -10px -10px 24px rgba(255,255,255,.82), inset 1px 1px 2px rgba(255,255,255,.9); }
+.family-blessings__families { display: grid; grid-template-columns: minmax(0, 1fr) 4.5rem minmax(0, 1fr); align-items: center; gap: clamp(.5rem, 3vw, 2rem); }
+.family-blessings__family { min-width: 0; }
+.family-blessings__label { margin: 0 0 1.2rem; color: #785f37; font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
+.family-blessings__family h3 { margin: 0; color: var(--maroon); font-family: var(--type-display); font-size: clamp(1.55rem, 3vw, 2.25rem); font-weight: 400; line-height: 1.18; }
+.family-blessings__ampersand { display: block; margin: .25rem 0; color: var(--gold); font-family: var(--type-display); font-size: 1.25rem; }
+.family-blessings__motif { display: flex; height: 100%; min-height: 12rem; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; color: var(--gold); }
+.family-blessings__motif span { width: 1px; flex: 1; background: rgba(181,150,90,.48); }
+.family-blessings__message { max-width: 37rem; margin: clamp(2rem, 5vw, 3.5rem) auto 1.2rem; padding-top: clamp(1.6rem, 4vw, 2.5rem); border-top: 1px solid rgba(181,150,90,.36); color: #604b40; font-family: var(--type-display); font-size: clamp(1.28rem, 2.5vw, 1.7rem); line-height: 1.4; }
 .family-dialog { position: fixed; inset: 0; display: grid; width: 100vw; height: 100dvh; min-height: 100%; max-width: none; max-height: none; margin: 0; padding: clamp(1.2rem, 5vw, 3rem); border: 0; background: radial-gradient(ellipse at 50% 42%, #fffaf0 0%, #f3e9d9 62%, #e8dcc9 100%); color: var(--brown); place-items: center; overflow-y: auto; }
 .family-dialog:not([open]) { display: none; }
 .family-dialog::backdrop { background: #f3e9d9; }
@@ -282,10 +274,10 @@ img { max-width: 100%; }
   .event-card + .event-card { border-top: 1px solid rgba(211,182,122,.38); border-left: 1px solid rgba(211,182,122,.38); }
   .event-card__index { margin-bottom: 1rem; }
   .event-card__note { min-height: 0; margin-bottom: 1.1rem; }
-  .couple__grid, .wishes__grid { grid-template-columns: 1fr; gap: 3rem; }
-  .couple__grid { max-width: 37rem; }
-  .couple__photo { width: min(100%, 28rem); margin-inline: auto; }
-  .photo-placeholder, .photo-carousel { min-height: auto; }
+  .wishes__grid { grid-template-columns: 1fr; gap: 3rem; }
+  .family-blessings__families { grid-template-columns: 1fr; gap: 1.3rem; }
+  .family-blessings__motif { min-height: 0; flex-direction: row; }
+  .family-blessings__motif span { width: auto; height: 1px; }
   .things-grid { grid-template-columns: 1fr; }
   .thing-card { min-height: 0; }
   .thing-card .text-link { font-size: .72rem; }
@@ -320,26 +312,6 @@ img { max-width: 100%; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
-/* Keep the carousel arrows consistent across mobile browsers and preserve touch swipes. */
-.photo-carousel { touch-action: pan-y pinch-zoom; }
-.photo-carousel__controls button {
-  -webkit-appearance: none;
-  appearance: none;
-  margin: 0;
-  padding: 0;
-  background-image: none;
-  color: #fff;
-  font-size: 0;
-  line-height: 0;
-  -webkit-tap-highlight-color: transparent;
-}
-.photo-carousel__controls button svg { display: block; width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; }
-.photo-carousel__controls button:active { transform: scale(.96); background-color: rgba(66,19,30,.94); }
-.photo-carousel__controls button:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-@media (hover: none) {
-  .photo-carousel__controls button:hover { transform: none; background-color: rgba(41,28,26,.58); }
-}
-
 .wish-list { display: grid; max-height: 28rem; gap: .5rem; margin: 0; padding: 0; overflow: auto; list-style: none; scrollbar-color: var(--gold) var(--ivory); scrollbar-width: thin; }
 .wish-entry { position: relative; padding: 1rem .75rem .8rem; border-bottom: 1px solid rgba(181,150,90,.3); }
 .wish-entry blockquote { margin: 0; color: #604d45; font-family: var(--type-display); font-size: 1.2rem; line-height: 1.35; }
@@ -371,10 +343,10 @@ img { max-width: 100%; }
   .event-card + .event-card { border-top: 1px solid rgba(211,182,122,.38); border-left: 1px solid rgba(211,182,122,.38); }
   .event-card__index { margin-bottom: 1rem; }
   .event-card__note { min-height: 0; margin-bottom: 1.1rem; }
-  .couple__grid, .wishes__grid { grid-template-columns: 1fr; gap: 3rem; }
-  .couple__grid { max-width: 37rem; }
-  .couple__photo { width: min(100%, 28rem); margin-inline: auto; }
-  .photo-placeholder, .photo-carousel { min-height: auto; }
+  .wishes__grid { grid-template-columns: 1fr; gap: 3rem; }
+  .family-blessings__families { grid-template-columns: 1fr; gap: 1.3rem; }
+  .family-blessings__motif { min-height: 0; flex-direction: row; }
+  .family-blessings__motif span { width: auto; height: 1px; }
   .things-grid { grid-template-columns: 1fr; }
   .thing-card { min-height: 0; }
   .thing-card .text-link { font-size: .72rem; }
@@ -398,10 +370,6 @@ img { max-width: 100%; }
   .countdown-unit { min-width: 3.35rem; padding: .45rem .35rem .35rem; }
   .countdown-unit strong { font-size: 2.3rem; }
   .countdown-unit span { font-size: .56rem; letter-spacing: .1em; }
-}
-
-@media (hover: none) {
-  .photo-carousel__controls button:hover { transform: none; background-color: rgba(41,28,26,.58); }
 }
 
 @media (max-width: 420px) and (max-height: 700px) {
@@ -437,3 +405,4 @@ img { max-width: 100%; }
   .wish-dialog__header { padding: 1rem 1rem .8rem; }
   .wish-dialog__body { max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 7rem); padding-inline: .75rem; }
 }
+

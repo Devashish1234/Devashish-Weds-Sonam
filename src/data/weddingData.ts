@@ -51,11 +51,6 @@ export const weddingData: WeddingData = {
   hashtag: '#DevashishWedsSonam',
   assets: {
     mandap: 'images/temple-mandap.png',
-    couplePhotos: [
-      { src: 'images/couple-snow.jpeg', alt: 'Together outdoors in a snowy landscape.' },
-      { src: 'images/couple-portrait.jpeg', alt: 'A close-up selfie together.' },
-      { src: 'images/couple-lights.jpeg', alt: 'Sharing a smile beneath warm lights.' },
-    ],
     videoUrl: '',
     musicUrl: '',
   },
@@ -66,3 +61,4 @@ export function getCoupleOrder(side: FamilySide): CoupleOrder {
     ? { first: weddingData.bride, second: weddingData.groom }
     : { first: weddingData.groom, second: weddingData.bride }
 }
+

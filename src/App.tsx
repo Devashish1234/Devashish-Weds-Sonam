@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Countdown } from './components/Countdown'
-import { Couple } from './components/Couple'
+import { FamilyBlessings } from './components/FamilyBlessings'
 import { DateReveal } from './components/DateReveal'
 import { Footer } from './components/Footer'
 import { FamilySidePrompt } from './components/FamilySidePrompt'
@@ -35,7 +35,7 @@ export default function App() {
         <Invitation dateRevealed={dateRevealed} names={names} />
         <DateReveal dateRevealed={dateRevealed} onReveal={() => setDateRevealed(true)} />
         <Functions dateRevealed={dateRevealed} />
-        <Couple names={names} />
+        <FamilyBlessings names={names} />
         <Instagram />
         <Video />
         <Countdown dateRevealed={dateRevealed} />
@@ -48,3 +48,4 @@ export default function App() {
     </>
   )
 }
+
