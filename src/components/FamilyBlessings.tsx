@@ -14,6 +14,21 @@ function FamilyPanel({ person }: { person: WeddingPerson }) {
   )
 }
 
+function MandalaArtwork() {
+  return (
+    <svg className="family-blessings__art" viewBox="0 0 160 160" fill="none" aria-hidden="true">
+      <circle cx="80" cy="80" r="74" />
+      <circle cx="80" cy="80" r="63" />
+      <circle cx="80" cy="80" r="23" />
+      {Array.from({ length: 12 }, (_, index) => (
+        <ellipse key={index} cx="80" cy="46" rx="12" ry="25" transform={`rotate(${index * 30} 80 80)`} />
+      ))}
+      <circle cx="80" cy="80" r="8" />
+      <path d="M80 2v8M80 150v8M2 80h8M150 80h8" />
+    </svg>
+  )
+}
+
 export function FamilyBlessings({ names }: { names: CoupleOrder }) {
   return (
     <section className="family-blessings section-pad" aria-labelledby="family-blessings-title">
@@ -26,6 +41,7 @@ export function FamilyBlessings({ names }: { names: CoupleOrder }) {
           />
         </Reveal>
         <Reveal delay={0.1} className="family-blessings__frame">
+          <MandalaArtwork />
           <div className="family-blessings__families">
             <FamilyPanel person={names.first} />
             <div className="family-blessings__motif" aria-hidden="true">

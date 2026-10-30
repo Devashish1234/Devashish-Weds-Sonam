@@ -93,7 +93,7 @@ Use native inputs with visible labels and field-level error text. Do not show in
 At each fresh visit, ask guests whether they are joining from the groom's or bride's side. Use a native modal dialog so focus stays inside the two required choices, and reorder the couple and parent names for that visit. Do not persist this choice across launches.
 The entrance dialog uses a restrained claymorphism treatment in the invitation palette: warm ivory surfaces, soft raised and inset shadows, rounded choice tiles, and the same clear text hierarchy. Keep the page behind the full-screen gate hidden until a side is chosen.
 
-The clay surface system continues through the invitation: blessing, scratch card, schedule panels, guest information, RSVP, wishes, countdown units, and media frame. Compact card internals for phone scanning. A family blessing section uses two balanced parent-name groups and a gold floral divider to honor both families without personal photographs.
+The clay surface system continues through the invitation: blessing, scratch card, schedule panels, guest information, RSVP, wishes, countdown units, and media frame. Compact card internals for phone scanning. A family blessing section uses two balanced parent-name groups and a gold mandala motif to honor both families without personal photographs. The celebration cards sit on a connected gold timeline, horizontal on wide screens and vertical on phones.
 
 ### Iconography
 

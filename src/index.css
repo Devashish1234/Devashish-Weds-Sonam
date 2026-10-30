@@ -138,7 +138,11 @@ img { max-width: 100%; }
 .functions::after { bottom: -18rem; left: -12rem; width: 31rem; height: 31rem; }
 .functions .section-shell { position: relative; z-index: 1; }
 .functions .eyebrow { color: #d3b67a; }
-.event-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem; }
+.event-grid { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem; margin: 0; padding: 0; list-style: none; }
+.event-grid::before { position: absolute; top: 1.35rem; right: 16%; left: 16%; border-top: 1px solid rgba(211,182,122,.6); content: ""; }
+.event-timeline__item { position: relative; min-width: 0; padding-top: 3.3rem; }
+.event-timeline__node { position: absolute; z-index: 1; top: .15rem; left: 50%; display: grid; width: 2.4rem; height: 2.4rem; transform: translateX(-50%); border: 1px solid rgba(211,182,122,.72); border-radius: 50%; background: var(--wine); color: #d3b67a; place-items: center; }
+.event-timeline__content { height: 100%; }
 .event-card { height: 100%; padding: 1.6rem clamp(1rem, 2.5vw, 2rem); border: 1px solid rgba(211,182,122,.38); border-radius: 1.1rem; background: #4d1c27; box-shadow: 9px 10px 20px rgba(20,5,9,.24), -5px -5px 16px rgba(255,255,255,.035), inset 1px 1px 1px rgba(255,255,255,.07); }
 .event-card + .event-card { border-left: 1px solid rgba(211,182,122,.38); }
 .event-card__index { margin: 0 0 1.2rem; color: #d3b67a; font-size: .65rem; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
@@ -157,6 +161,7 @@ img { max-width: 100%; }
 .family-blessings__inner { max-width: 65rem; }
 .family-blessings .section-heading { margin-bottom: clamp(2rem, 5vw, 3.5rem); }
 .family-blessings__frame { padding: clamp(2rem, 5vw, 4rem); border: 1px solid rgba(181,150,90,.35); border-radius: 1.6rem; background: #f4ead9; box-shadow: 12px 14px 30px rgba(91,64,42,.09), -10px -10px 24px rgba(255,255,255,.82), inset 1px 1px 2px rgba(255,255,255,.9); }
+.family-blessings__art { display: block; width: clamp(6.5rem, 13vw, 9rem); margin: -.4rem auto 1.8rem; stroke: var(--gold); stroke-width: .8; }
 .family-blessings__families { display: grid; grid-template-columns: minmax(0, 1fr) 4.5rem minmax(0, 1fr); align-items: center; gap: clamp(.5rem, 3vw, 2rem); }
 .family-blessings__family { min-width: 0; }
 .family-blessings__label { margin: 0 0 1.2rem; color: #785f37; font-size: .68rem; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; }
@@ -270,6 +275,9 @@ img { max-width: 100%; }
   .hero-door { margin: 0; }
   .scroll-cue { bottom: 1.1rem; }
   .event-grid { grid-template-columns: 1fr; }
+  .event-grid::before { top: 1.2rem; right: auto; bottom: 1.2rem; left: 1.2rem; border-top: 0; border-left: 1px solid rgba(211,182,122,.6); }
+  .event-timeline__item { padding-top: 0; padding-left: 3.4rem; }
+  .event-timeline__node { top: 1rem; left: 0; transform: none; }
   .event-card { padding: 1.35rem 1.1rem; }
   .event-card + .event-card { border-top: 1px solid rgba(211,182,122,.38); border-left: 1px solid rgba(211,182,122,.38); }
   .event-card__index { margin-bottom: 1rem; }
@@ -339,6 +347,9 @@ img { max-width: 100%; }
   .hero-door { margin: 0; }
   .scroll-cue { bottom: 1.1rem; }
   .event-grid { grid-template-columns: 1fr; }
+  .event-grid::before { top: 1.2rem; right: auto; bottom: 1.2rem; left: 1.2rem; border-top: 0; border-left: 1px solid rgba(211,182,122,.6); }
+  .event-timeline__item { padding-top: 0; padding-left: 3.4rem; }
+  .event-timeline__node { top: 1rem; left: 0; transform: none; }
   .event-card { padding: 1.35rem 1.1rem; }
   .event-card + .event-card { border-top: 1px solid rgba(211,182,122,.38); border-left: 1px solid rgba(211,182,122,.38); }
   .event-card__index { margin-bottom: 1rem; }
